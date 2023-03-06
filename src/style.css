@@ -65,6 +65,7 @@ body {
 section {
     overflow: scroll;
     padding-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 /*element*/
@@ -87,7 +88,7 @@ h1 {
     font-family: "Barlow Condensed", cursive;
     line-height: 1;
     margin-top: 6px;
-    color: red;
+    color: rgb(222, 0, 0);
 }
 
 .series {
@@ -109,10 +110,24 @@ h1 {
     gap: 24px;
 }
 
+.bookTitleAndOrder {
+    display: flex;
+    width: 800px;
+    justify-content: space-between;
+}
+
+.order {
+    background-color: #a8a29e;
+    padding: 10px 10px;
+    border-radius: 100px;
+    font-size: 16px;
+}
+
 .bookDetails {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 800px;
 }
 
 .bookImg {
@@ -129,6 +144,7 @@ h1 {
     flex-direction: column;
     width: 350px;
     gap: 8px;
+    margin-left: 40px;
 }
 
 @media (max-width: 1200px) {
@@ -206,13 +222,14 @@ ul {
     text-transform: uppercase;
     font-size: 17px;
     padding: 16px 0 13px;
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
         135deg,
         #3b82f6,
         #ef4444,
         #16a34a,
         #eab308
-    );
+    ); */
+    background-color: rgb(128, 0, 0);
     color: inherit;
     border-radius: 100px;
     transition: 0.3s;
@@ -230,11 +247,11 @@ ul {
 
 .btn-all-series {
     margin-bottom: 16px;
-    width: 100%;
+    width: 300%;
 }
 
 .btn-series {
-    width: 100%;
+    width: 300%;
     background-image: none;
 }
 

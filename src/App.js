@@ -38,33 +38,41 @@ function App() {
     //========================================================================================================
 
     //using useEffect to pull all the books form supabase and display in browser
-    useEffect(function () {
-        async function getBooks() {
-            //display loading screen whilst fetching data
-            setIsLoading(true);
-            //select all books from supabase
-            let query = supabase.from("books").select("*");
-            //however if a book series is selected only show them => using supabase .eq
-            if (currentSeries !== "all") {
-                query = query.eq("series", currentSeries);
+    useEffect(
+        function () {
+            async function getBooks() {
+                //display loading screen whilst fetching data
+                setIsLoading(true);
+                //select all books from supabase
+                let query = supabase.from("books").select("*");
+                //however if a book series is selected only show them => using supabase .eq
+                if (currentSeries !== "all") {
+                    query = query.eq("bookSeries", currentSeries);
+                    console.log(currentSeries);
+                }
+
+                //order books by publication year
+                const { data: books, error } = await query.order(
+                    "bookPubYear",
+                    {
+                        ascending: true,
+                    }
+                );
+
+                // checking books coming through
+                console.log(books);
+
+                //error handling
+                if (!error) setBooks(books);
+                else alert("There was a problem getting data");
+
+                //hide loading message
+                setIsLoading(false);
             }
-
-            //order books by publication year
-            const { data: books, error } = await query.order("bookPubYear", {
-                ascending: true,
-            });
-
-            // console.log(books); checking books coming through
-
-            //error handling
-            if (!error) setBooks(books);
-            else alert("There was a problem getting data");
-
-            //hide loading message
-            setIsLoading(false);
-        }
-        getBooks();
-    }, []);
+            getBooks();
+        },
+        [currentSeries]
+    );
 
     //========================================================================================================
 
@@ -177,12 +185,14 @@ function App() {
                 SetIsUploading(false);
                 //add the new book to ui/state
                 if (!error) setBooks((books) => [newBook[0], ...books]);
+            } else {
+                alert("Please take care to enter details again");
             }
             //reset input
             setBookName("");
             setBookDescription("");
             setBookSource("http://example.com");
-            setCurrentSeries("");
+            setCurrentSeries("all");
 
             //close form
             setShowForm(false);
@@ -205,7 +215,7 @@ function App() {
                     onChange={(e) => setBookDescription(e.target.value)}
                     disabled={isUploading}
                 />
-                <span>{1000 - bookNameLength}</span>
+                <span>{1000 - bookDescriptionLength}</span>
                 <input
                     type="text"
                     placeholder="Enter Book Image URL Here..."
@@ -309,11 +319,20 @@ function App() {
             <li className="book">
                 <img src={book.bookImg} alt="Book Image" className="bookImg" />
                 <div className="bookDetails">
-                    <h2>{book.bookName}</h2>
+                    <div className="bookTitleAndOrder">
+                        <h2>{book.bookName}</h2>
+                        <p className="order">
+                            Book {book.id} of {books.length}
+                        </p>
+                    </div>
+
                     <p>{book.bookDescription}</p>
                     <b>{book.bookPubYear}</b>
                     <span
                         className="series"
+                        onClick={() => {
+                            setCurrentSeries(book.bookSeries);
+                        }}
                         style={{
                             backgroundColor: SERIES.find(
                                 (ser) => ser.name === book.bookSeries
