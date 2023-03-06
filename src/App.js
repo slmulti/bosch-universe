@@ -75,7 +75,6 @@ function App() {
             {showForm ? (
                 <NewBookForm setBooks={setBooks} setShowForm={setShowForm} />
             ) : null}
-            <p>yo</p>
             <main className="main">
                 <SeriesFilters setCurrentSeries={setCurrentSeries} />
                 {isLoading ? (
@@ -308,22 +307,29 @@ function App() {
     function Book({ book, setBooks }) {
         return (
             <li className="book">
-                <h2>{book.bookName}</h2>
-                <img src={book.bookImg} alt="Book Image" />
-                {book.bookDescription} {book.bookPubYear}
+                <img src={book.bookImg} alt="Book Image" className="bookImg" />
+                <div className="bookDetails">
+                    <h2>{book.bookName}</h2>
+                    <p>{book.bookDescription}</p>
+                    <b>{book.bookPubYear}</b>
+                    <span
+                        className="series"
+                        style={{
+                            backgroundColor: SERIES.find(
+                                (ser) => ser.name === book.bookSeries
+                            ).color,
+                        }}
+                    >
+                        {book.bookSeries}
+                    </span>
+                </div>
+                <div className="addBookDetails">
+                    <h3>Own: Yes</h3>
+                    <h3>Read: Yes</h3>
+                </div>
                 <a className="source" href={book.bookSource} target="_blank">
                     (Amazon)
                 </a>
-                <span
-                    className="series"
-                    style={{
-                        backgroundColor: SERIES.find(
-                            (ser) => ser.name === book.bookSeries
-                        ).color,
-                    }}
-                >
-                    {book.bookSeries}
-                </span>
             </li>
         );
     }
