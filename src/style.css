@@ -79,6 +79,7 @@ section {
 .logo img {
     height: 68px;
     width: 68px;
+    border-radius: 5px;
 }
 
 h1 {
@@ -132,6 +133,8 @@ h1 {
 
 .bookImg {
     height: 256px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .bookImg:hover {
@@ -169,17 +172,17 @@ h1 {
     text-align: center;
 }
 
-.vote-buttons {
+/* .vote-buttons {
     margin-left: auto;
     flex-shrink: 0;
     display: flex;
     gap: 8px;
-}
+} */
 
 .vote-buttons button {
     border: none;
     background-color: #78716c;
-    font-size: 18px;
+    font-size: 32px;
     padding: 6px 12px;
     border-radius: 100px;
     color: inherit;
@@ -195,6 +198,11 @@ h1 {
 
 .vote-buttons button:disabled {
     background-color: #44403c;
+}
+
+.own-btn {
+    color: green;
+    font-weight: bolder;
 }
 
 ul {
@@ -233,6 +241,9 @@ ul {
     color: inherit;
     border-radius: 100px;
     transition: 0.3s;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
 }
 
 .btn:hover {
@@ -295,7 +306,15 @@ ul {
     margin-right: 18px;
 }
 
-@media (max-width: 1000px) {
+.true {
+    color: green;
+}
+
+.false {
+    color: red;
+}
+
+. @media (max-width: 1000px) {
     body {
         /* padding: 32px 48px; */
     }

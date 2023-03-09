@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import supabase from "./supabase";
 import "./style.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/loginPage";
+import Success from "./pages/successPage";
+import { useNavigate } from "react-router-dom";
 
 function App() {
     const [showForm, setShowForm] = useState(false);
-    // const [facts, setFacts] = useState([]);
     const [books, setBooks] = useState([]);
+    const [owns, setOwns] = useState([false]);
     const [isLoading, setIsLoading] = useState(false);
-    // const [currentCategory, setCurrentCategory] = useState("all");
     const [currentSeries, setCurrentSeries] = useState("all");
 
     const SERIES = [
@@ -16,9 +19,9 @@ function App() {
         { name: "Terry McCaleb", color: "#ef4444" },
         { name: "Mickey Haller", color: "#eab308" },
         { name: "Renée Ballard", color: "#db2777" },
-        { name: "Spare1", color: "#14b8a6" },
-        { name: "Spare2", color: "#f97316" },
-        { name: "Spare3", color: "#8b5cf6" },
+        // { name: "Spare1", color: "#14b8a6" },
+        // { name: "Spare2", color: "#f97316" },
+        // { name: "Spare3", color: "#8b5cf6" },
     ];
 
     //========================================================================================================
@@ -70,6 +73,23 @@ function App() {
                 setIsLoading(false);
             }
             getBooks();
+
+            // async function getOwns() {
+            //     // setIsLoading(true);
+            //     let query = supabase.from("owns").select("*");
+            //     const { data: owns, error } = await query.order("id", {
+            //         ascending: true,
+            //     });
+            //     // console.log(owns[0]);
+            //     const x = owns[0];
+            //     console.log(x.own);
+
+            //     if (!error) setOwns(owns);
+            //     else alert("There was a problem getting data");
+
+            //     setIsLoading(false);
+            // }
+            // getOwns();
         },
         [currentSeries]
     );
@@ -78,6 +98,12 @@ function App() {
 
     return (
         <>
+            <Router>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/success" element={<Success />} />
+                </Routes>
+            </Router>
             {/* display the header */}
             <Header showForm={showForm} setShowForm={setShowForm} />
             {showForm ? (
@@ -300,8 +326,10 @@ function App() {
                                 key={book.id}
                                 book={book}
                                 setBooks={setBooks}
+                                setOwns={setOwns}
                             />
                         ))}
+                        {/* {console.log(owns.map((arr) => arr.own))} */}
                     </ul>
                     <p>
                         There are {books.length} books in the database. Add any
@@ -314,7 +342,54 @@ function App() {
 
     //========================================================================================================
 
-    function Book({ book, setBooks }) {
+    function Book({ book, setBooks, setOwns }) {
+        const [bookRating, setBookRating] = useState("0");
+
+        async function handleOwn(columnName) {
+            const { data: updatedBook, error } = await supabase
+                .from("books")
+                .update({ own: !book.own })
+                .eq("id", book.id)
+                .select();
+
+            console.log(updatedBook);
+
+            if (!error)
+                setBooks((books) =>
+                    books.map((b) => (b.id === book.id ? updatedBook[0] : b))
+                );
+        }
+
+        async function handleRead(columnName) {
+            const { data: updatedBook, error } = await supabase
+                .from("books")
+                .update({ read: !book.read })
+                .eq("id", book.id)
+                .select();
+
+            console.log(updatedBook);
+
+            if (!error)
+                setBooks((books) =>
+                    books.map((b) => (b.id === book.id ? updatedBook[0] : b))
+                );
+        }
+
+        async function handleRating(columnName) {
+            const { data: updatedBook, error } = await supabase
+                .from("books")
+                .update({ bookRating: columnName })
+                .eq("id", book.id)
+                .select();
+
+            // console.log(updatedBook);
+
+            if (!error)
+                setBooks((books) =>
+                    books.map((b) => (b.id === book.id ? updatedBook[0] : b))
+                );
+        }
+
         return (
             <li className="book">
                 <img src={book.bookImg} alt="Book Image" className="bookImg" />
@@ -322,7 +397,9 @@ function App() {
                     <div className="bookTitleAndOrder">
                         <h2>{book.bookName}</h2>
                         <p className="order">
-                            Book {book.id} of {books.length}
+                            {/* Book {book.id} of {books.length} */}
+                            Book {books.indexOf(book) + 1} of {books.length}
+                            {/* {console.log(books.indexOf(book) + 1)} */}
                         </p>
                     </div>
 
@@ -343,8 +420,59 @@ function App() {
                     </span>
                 </div>
                 <div className="addBookDetails">
-                    <h3>Own: Yes</h3>
-                    <h3>Read: Yes</h3>
+                    <h3>
+                        Own:{" "}
+                        {book.own ? (
+                            <button
+                                className="vote-buttons own-btn"
+                                onClick={() => handleOwn("own")}
+                            >
+                                ✔
+                            </button>
+                        ) : (
+                            <button
+                                className="vote-buttons"
+                                onClick={() => handleOwn("own")}
+                            >
+                                ⛔
+                            </button>
+                        )}
+                        {/* {console.log(owns[0].own)}; */}
+                        {/* {console.log(owns)} */}
+                    </h3>
+                    <h3>
+                        Read:
+                        {book.read ? (
+                            <button
+                                className="vote-buttons own-btn"
+                                onClick={() => handleRead("own")}
+                            >
+                                ✔
+                            </button>
+                        ) : (
+                            <button
+                                className="vote-buttons"
+                                onClick={() => handleRead("own")}
+                            >
+                                ⛔
+                            </button>
+                        )}
+                        {/* {console.log(owns.read)} */}
+                    </h3>
+                    <h3>
+                        Rating: {book.bookRating}{" "}
+                        <select
+                            value={bookRating}
+                            onChange={(e) => handleRating(e.target.value)}
+                        >
+                            <option value="0">Choose A Rating</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </h3>
                 </div>
                 <a className="source" href={book.bookSource} target="_blank">
                     (Amazon)
