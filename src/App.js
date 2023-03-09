@@ -404,7 +404,17 @@ function App() {
                     </div>
 
                     <p>{book.bookDescription}</p>
-                    <b>{book.bookPubYear}</b>
+                    <div>
+                        <b>{book.bookPubYear}</b>
+                        <a
+                            className="source"
+                            href={book.bookSource}
+                            target="_blank"
+                        >
+                            (Amazon)
+                        </a>
+                    </div>
+
                     <span
                         className="series"
                         onClick={() => {
@@ -421,17 +431,17 @@ function App() {
                 </div>
                 <div className="addBookDetails">
                     <h3>
-                        Own:{" "}
+                        Own:{"    "}
                         {book.own ? (
                             <button
-                                className="vote-buttons own-btn"
+                                className="ownread-buttons own-btn"
                                 onClick={() => handleOwn("own")}
                             >
                                 ✔
                             </button>
                         ) : (
                             <button
-                                className="vote-buttons"
+                                className="ownread-buttons"
                                 onClick={() => handleOwn("own")}
                             >
                                 ⛔
@@ -441,17 +451,17 @@ function App() {
                         {/* {console.log(owns)} */}
                     </h3>
                     <h3>
-                        Read:
+                        Read:{"    "}
                         {book.read ? (
                             <button
-                                className="vote-buttons own-btn"
+                                className="ownread-buttons own-btn"
                                 onClick={() => handleRead("own")}
                             >
                                 ✔
                             </button>
                         ) : (
                             <button
-                                className="vote-buttons"
+                                className="ownread-buttons"
                                 onClick={() => handleRead("own")}
                             >
                                 ⛔
@@ -460,7 +470,8 @@ function App() {
                         {/* {console.log(owns.read)} */}
                     </h3>
                     <h3>
-                        Rating: {book.bookRating}{" "}
+                        Rating: {book.bookRating}
+                        {" ⭐"}
                         <select
                             value={bookRating}
                             onChange={(e) => handleRating(e.target.value)}
@@ -474,9 +485,6 @@ function App() {
                         </select>
                     </h3>
                 </div>
-                <a className="source" href={book.bookSource} target="_blank">
-                    (Amazon)
-                </a>
             </li>
         );
     }

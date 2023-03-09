@@ -179,7 +179,7 @@ h1 {
     gap: 8px;
 } */
 
-.vote-buttons button {
+.ownread-buttons button {
     border: none;
     background-color: #78716c;
     font-size: 32px;
@@ -192,11 +192,11 @@ h1 {
     transition: 0.3s;
 }
 
-.vote-buttons button:hover {
+.ownread-buttons button:hover {
     background-color: #292524;
 }
 
-.vote-buttons button:disabled {
+.ownread-buttons button:disabled {
     background-color: #44403c;
 }
 
