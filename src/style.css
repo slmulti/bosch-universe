@@ -325,10 +325,7 @@ ul {
     color: red;
 }
 
-. @media (max-width: 1000px) {
-    body {
-        /* padding: 32px 48px; */
-    }
+@media (max-width: 1000px) {
     .book-form {
         flex-direction: column;
         align-items: stretch;
