@@ -375,20 +375,65 @@ function App() {
                 );
         }
 
-        async function handleRating(columnName) {
+        async function handleRating(ratingValue) {
             const { data: updatedBook, error } = await supabase
                 .from("books")
-                .update({ bookRating: columnName })
+                .update({ bookRating: ratingValue })
                 .eq("id", book.id)
                 .select();
 
-            // console.log(updatedBook);
+            console.log(updatedBook);
 
             if (!error)
                 setBooks((books) =>
                     books.map((b) => (b.id === book.id ? updatedBook[0] : b))
                 );
         }
+
+        const handleDelete = async () => {
+            const { data, error } = await supabase
+                .from("books")
+                .delete()
+                .eq("id", book.id)
+                .select();
+
+            if (error) {
+                console.log(error);
+            }
+            if (data) {
+                alert(`${data[0].bookName} has been deleted`);
+
+                //should be able to change local state here and update booklist without recalling the API, dirty solution
+
+                //display loading screen whilst fetching data
+                setIsLoading(true);
+                //select all books from supabase
+                let query = supabase.from("books").select("*");
+                //however if a book series is selected only show them => using supabase .eq
+                if (currentSeries !== "all") {
+                    query = query.eq("bookSeries", currentSeries);
+                    console.log(currentSeries);
+                }
+
+                //order books by publication year
+                const { data: books, error } = await query.order(
+                    "bookPubYear",
+                    {
+                        ascending: true,
+                    }
+                );
+
+                // checking books coming through
+                console.log(books);
+
+                //error handling
+                if (!error) setBooks(books);
+                else alert("There was a problem getting data");
+
+                //hide loading message
+                setIsLoading(false);
+            }
+        };
 
         return (
             <li className="book">
@@ -486,7 +531,9 @@ function App() {
                     </h3>
                 </div>
                 <div>
-                    <button className="delete-btn">x</button>
+                    <button className="delete-btn" onClick={handleDelete}>
+                        🗑
+                    </button>
                 </div>
             </li>
         );
