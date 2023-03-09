@@ -485,6 +485,9 @@ function App() {
                         </select>
                     </h3>
                 </div>
+                <div>
+                    <button className="delete-btn">x</button>
+                </div>
             </li>
         );
     }
