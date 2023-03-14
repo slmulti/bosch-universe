@@ -113,7 +113,7 @@ h1 {
 
 .bookTitleAndOrder {
     display: flex;
-    width: fit-content;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -317,14 +317,20 @@ ul {
     color: red;
 }
 
-@media (max-width: 1000px) {
-    .book-form {
-        flex-direction: column;
-        align-items: stretch;
+@media (max-width: 1200px) {
+    main {
+        display: grid;
+        grid-template-columns: 100px 1fr;
+        gap: 48px;
     }
-    .book-form input,
-    .book-form select {
-        width: auto;
+    .btn-all-series {
+        margin-bottom: 16px;
+        width: 200%;
+    }
+
+    .btn-series {
+        width: 200%;
+        background-image: none;
     }
 }
 
@@ -332,6 +338,9 @@ ul {
     .main {
         grid-template-columns: 1fr;
         height: auto;
+    }
+    aside {
+        display: none;
     }
 }
 
@@ -351,6 +360,9 @@ ul {
 
     .fact {
         padding: 12px 16px;
+    }
+    aside {
+        display: none;
     }
 }
 
