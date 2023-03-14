@@ -113,7 +113,7 @@ h1 {
 
 .bookTitleAndOrder {
     display: flex;
-    width: 800px;
+    width: fit-content;
     justify-content: space-between;
 }
 
@@ -128,7 +128,7 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 800px;
+    width: fit-content;
 }
 
 .bookImg {
@@ -148,14 +148,6 @@ h1 {
     width: 350px;
     gap: 8px;
     margin-left: 40px;
-}
-
-@media (max-width: 1200px) {
-    .book {
-        flex-direction: column;
-        align-items: end;
-        gap: 12px;
-    }
 }
 
 .series {
@@ -359,5 +351,40 @@ ul {
 
     .fact {
         padding: 12px 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .book {
+        flex-direction: column;
+        align-items: end;
+        gap: 12px;
+        margin: 0;
+        margin-bottom: 16px;
+    }
+    aside {
+        display: none;
+    }
+    #root {
+        width: 360px;
+        align-items: center;
+        padding: 8px;
+    }
+    body {
+        margin: 5px;
+        padding: 5px;
+    }
+    .bookImg {
+        height: 400px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .delete-btn {
+        padding: 0px;
+        padding-bottom: 0px;
+    }
+    .series {
+        margin: 0px;
     }
 }

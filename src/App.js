@@ -458,6 +458,56 @@ function App() {
                         >
                             (Amazon)
                         </a>
+                        <h3>
+                            Own:{"    "}
+                            {book.own ? (
+                                <button
+                                    className="ownread-buttons own-btn"
+                                    onClick={() => handleOwn("own")}
+                                >
+                                    ✔
+                                </button>
+                            ) : (
+                                <button
+                                    className="ownread-buttons"
+                                    onClick={() => handleOwn("own")}
+                                >
+                                    ⛔
+                                </button>
+                            )}
+                            {/* {console.log(owns[0].own)}; */}
+                            {/* {console.log(owns)} */}
+                            Read:{"    "}
+                            {book.read ? (
+                                <button
+                                    className="ownread-buttons own-btn"
+                                    onClick={() => handleRead("own")}
+                                >
+                                    ✔
+                                </button>
+                            ) : (
+                                <button
+                                    className="ownread-buttons"
+                                    onClick={() => handleRead("own")}
+                                >
+                                    ⛔
+                                </button>
+                            )}
+                            {/* {console.log(owns.read)} */}
+                            Rating: {book.bookRating}
+                            {" ⭐"}
+                            <select
+                                value={bookRating}
+                                onChange={(e) => handleRating(e.target.value)}
+                            >
+                                <option value="0">Choose A Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </h3>
                     </div>
 
                     <span
@@ -474,62 +524,7 @@ function App() {
                         {book.bookSeries}
                     </span>
                 </div>
-                <div className="addBookDetails">
-                    <h3>
-                        Own:{"    "}
-                        {book.own ? (
-                            <button
-                                className="ownread-buttons own-btn"
-                                onClick={() => handleOwn("own")}
-                            >
-                                ✔
-                            </button>
-                        ) : (
-                            <button
-                                className="ownread-buttons"
-                                onClick={() => handleOwn("own")}
-                            >
-                                ⛔
-                            </button>
-                        )}
-                        {/* {console.log(owns[0].own)}; */}
-                        {/* {console.log(owns)} */}
-                    </h3>
-                    <h3>
-                        Read:{"    "}
-                        {book.read ? (
-                            <button
-                                className="ownread-buttons own-btn"
-                                onClick={() => handleRead("own")}
-                            >
-                                ✔
-                            </button>
-                        ) : (
-                            <button
-                                className="ownread-buttons"
-                                onClick={() => handleRead("own")}
-                            >
-                                ⛔
-                            </button>
-                        )}
-                        {/* {console.log(owns.read)} */}
-                    </h3>
-                    <h3>
-                        Rating: {book.bookRating}
-                        {" ⭐"}
-                        <select
-                            value={bookRating}
-                            onChange={(e) => handleRating(e.target.value)}
-                        >
-                            <option value="0">Choose A Rating</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                    </h3>
-                </div>
+
                 <div>
                     <button className="delete-btn" onClick={handleDelete}>
                         🗑
