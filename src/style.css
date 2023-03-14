@@ -325,11 +325,11 @@ ul {
     }
     .btn-all-series {
         margin-bottom: 16px;
-        width: 200%;
+        width: 300%;
     }
 
     .btn-series {
-        width: 200%;
+        width: 300%;
         background-image: none;
     }
 }
