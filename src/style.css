@@ -348,6 +348,9 @@ ul {
     #root {
         padding: 5px;
     }
+    body {
+        padding: 2px;
+    }
 
     .header {
         flex-direction: column;
