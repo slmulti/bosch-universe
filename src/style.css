@@ -403,7 +403,8 @@ ul {
     .bookTitleAndOrder {
         width: auto;
     }
-    aside {
+    aside,
+    .btn-large {
         display: none;
     }
     #root {
