@@ -361,9 +361,6 @@ ul {
         padding: 16px;
     }
 
-    .fact {
-        padding: 5px 5px;
-    }
     aside,
     .btn-large {
         display: none;
@@ -374,6 +371,7 @@ ul {
         gap: 12px;
         margin: 0;
         margin-bottom: 16px;
+        padding-top: 30px;
     }
     .bookTitleAndOrder {
         width: auto;
