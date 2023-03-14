@@ -364,7 +364,8 @@ ul {
     .fact {
         padding: 5px 5px;
     }
-    aside {
+    aside,
+    .btn-large {
         display: none;
     }
     .book {
